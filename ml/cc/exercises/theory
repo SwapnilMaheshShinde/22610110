@@ -1,0 +1,373 @@
+# **PRAC 1: TensorFlow Basic Operations**
+
+## **Theory & Full Forms:**
+- **TensorFlow**: Open-source library for numerical computation and machine learning
+- **Eager Execution**: Immediate operation evaluation without building computational graphs
+- **MatMul**: Matrix Multiplication
+- **ElemMul**: Element-wise Multiplication
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: What are tensors and their ranks?**
+**A1:** Tensors are multi-dimensional arrays with uniform data type. Rank indicates dimensions:
+- Rank 0: Scalar (single value)
+- Rank 1: Vector (1D array)
+- Rank 2: Matrix (2D array)
+- Higher ranks: 3D, 4D arrays
+
+**Q2: Difference between matrix and element-wise multiplication?**
+**A2:**
+- **Matrix multiplication (@)**: Dot product of rows and columns
+  ```python
+  [[1,2] @ [[5,6]  = [[1*5+2*7, 1*6+2*8]
+   [3,4]]   [7,8]]    [3*5+4*7, 3*6+4*8]]
+  ```
+- **Element-wise multiplication (*)**: Multiply corresponding elements
+  ```python
+  [[1,2] * [[5,6]  = [[1*5, 2*6]
+   [3,4]]   [7,8]]    [3*7, 4*8]]
+  ```
+
+**Q3: Why use Eager Execution?**
+**A3:** Benefits include:
+- Immediate results and debugging
+- Pythonic control flow
+- Easier for beginners
+- Interactive development
+
+---
+
+# **PRAC 2: Data Preprocessing**
+
+## **Theory & Full Forms:**
+- **Pandas**: Python Data Analysis Library
+- **NumPy**: Numerical Python
+- **NaN**: Not a Number (missing values)
+- **One-hot encoding**: Converting categorical to binary columns
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: Why normalize data?**
+**A1:** Normalization (scaling to [0,1] range):
+- Prevents features with large ranges from dominating
+- Improves model convergence
+- Makes algorithms distance-based (like KNN) work better
+
+**Q2: What is one-hot encoding and why use it?**
+**A2:** Converts categorical variables to binary vectors:
+```python
+# Original: ['Pune', 'Mumbai', 'Delhi']
+# After encoding:
+# City_Pune: [1,0,0], City_Mumbai: [0,1,0], City_Delhi: [0,0,1]
+```
+**Why:** Machine learning algorithms can't work with text directly
+
+**Q3: Methods to handle missing values?**
+**A3:**
+- **Mean/Median imputation**: For numerical data
+- **Mode imputation**: For categorical data  
+- **Forward/Backward fill**: Time series data
+- **Drop rows**: If too many missing values
+
+---
+
+# **PRAC 3: Data Visualization**
+
+## **Theory & Full Forms:**
+- **Seaborn**: Statistical data visualization
+- **Matplotlib**: Comprehensive plotting library
+- **KDE**: Kernel Density Estimate (smoothed histogram)
+- **Correlation**: Measure of linear relationship between variables (-1 to +1)
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: When to use histogram vs scatter plot?**
+**A1:**
+- **Histogram**: Single variable distribution, frequency analysis
+- **Scatter plot**: Relationship between TWO variables, correlation analysis
+
+**Q2: What does correlation heatmap show?**
+**A2:** Shows correlation coefficients between all pairs of numerical variables:
+- **+1**: Perfect positive correlation
+- **0**: No correlation  
+- **-1**: Perfect negative correlation
+- Colors: Red (positive), Blue (negative)
+
+**Q3: What is KDE in histplot?**
+**A3:** Kernel Density Estimate - smooths histogram using kernel function to show probability density rather than discrete bins. Better for understanding underlying distribution.
+
+---
+
+# **PRAC 4: Word Embeddings**
+
+## **Theory & Full Forms:**
+- **Word2Vec**: Word to Vector (predictive embeddings)
+- **GloVe**: Global Vectors for Word Representation (count-based)
+- **FAISS**: Facebook AI Similarity Search (efficient similarity search)
+- **L2 Distance**: Euclidean distance
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: What are word embeddings?**
+**A1:** Dense vector representations of words where semantically similar words have similar vectors. Example:
+- king - man + woman ≈ queen
+- Paris - France + Italy ≈ Rome
+
+**Q2: Difference between Word2Vec and GloVe?**
+**A2:**
+- **Word2Vec**: Predictive method (CBOW/Skip-gram), local context window
+- **GloVe**: Count-based method, global word co-occurrence statistics
+- **GloVe generally performs better** on word analogy tasks
+
+**Q3: How does FAISS work?**
+**A3:** FAISS uses:
+- **Vector quantization**: Compressing vectors
+- **Inverted indexes**: Fast nearest neighbor search
+- **GPU acceleration**: For large-scale similarity search
+
+---
+
+# **PRAC 5: Diffusion Models**
+
+## **Theory & Full Forms:**
+- **DDPM**: Denoising Diffusion Probabilistic Models
+- **MNIST**: Handwritten digit dataset (60,000 training images)
+- **Forward Process**: Adding Gaussian noise gradually
+- **Reverse Process**: Learning to denoise
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: How do diffusion models work?**
+**A1:** Two processes:
+1. **Forward**: Gradually add noise to data until pure noise
+2. **Reverse**: Train neural network to reverse this process (denoise)
+
+**Q2: Difference between VAEs and Diffusion models?**
+**A2:**
+- **VAEs**: Single step encoding/decoding
+- **Diffusion Models**: Multiple gradual denoising steps
+- **Diffusion produces higher quality** images but slower generation
+
+**Q3: Why use MNIST dataset?**
+**A3:** MNIST is ideal for:
+- Quick prototyping and testing
+- Simple 28x28 grayscale images
+- Well-established benchmark
+- Fast training times
+
+---
+
+# **PRAC 6: CLIP-Guided Diffusion**
+
+## **Theory & Full Forms:**
+- **CLIP**: Contrastive Language-Image Pre-training
+- **ViT**: Vision Transformer
+- **Multimodal**: Combining different data types (text + images)
+- **Contrastive Learning**: Learning by comparing positive and negative pairs
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: How does CLIP model work?**
+**A1:** CLIP trains on image-text pairs:
+- Encodes images and text to same vector space
+- Learns that matching pairs should have high similarity
+- Non-matching pairs should have low similarity
+
+**Q2: What is contrastive learning?**
+**A2:** Training method that:
+- Pulls positive pairs (matching image-text) closer in vector space
+- Pushes negative pairs (non-matching) apart
+- Uses contrastive loss (InfoNCE)
+
+**Q3: How is CLIP used in diffusion models?**
+**A3:** CLIP guides diffusion by:
+- Encoding text prompt to vector
+- Computing similarity with generated image
+- Using gradient to steer generation toward text description
+
+---
+
+# **PRAC 7: LoRA Fine-tuning**
+
+## **Theory & Full Forms:**
+- **LoRA**: Low-Rank Adaptation
+- **GPT**: Generative Pre-trained Transformer
+- **PPL**: Perplexity (measure of model uncertainty)
+- **Causal LM**: Language modeling predicting next token
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: What is LoRA and why use it?**
+**A1:** LoRA is parameter-efficient fine-tuning that:
+- Freezes original model weights
+- Adds small trainable adapters with low-rank decomposition
+- **Reduces memory by 90%** compared to full fine-tuning
+
+**Q2: How does LoRA reduce memory usage?**
+**A2:** By using low-rank matrices:
+- Original update: ΔW = A × B where rank(A,B) << rank(W)
+- Instead of training 100M parameters, train only 1M adapter parameters
+
+**Q3: What does perplexity measure?**
+**A3:** Perplexity measures how well probability model predicts sample:
+- **Lower perplexity = better model**
+- Mathematical: exp(cross-entropy loss)
+- Intuitive: "How surprised the model is by the data"
+
+---
+
+# **PRAC 8: Evaluation Metrics**
+
+## **Theory & Full Forms:**
+- **BLEU**: Bilingual Evaluation Understudy (for translation)
+- **ROUGE**: Recall-Oriented Understudy for Gisting Evaluation (for summarization)
+- **N-gram**: Contiguous sequence of n words
+- **QA**: Question Answering system evaluation
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: Difference between BLEU and ROUGE?**
+**A1:**
+- **BLEU**: Precision-focused (how many n-grams in output appear in reference)
+- **ROUGE**: Recall-focused (how many n-grams in reference appear in output)
+- **BLEU for translation, ROUGE for summarization**
+
+**Q2: What do ROUGE-1, ROUGE-2 measure?**
+**A2:**
+- **ROUGE-1**: Overlap of unigrams (single words)
+- **ROUGE-2**: Overlap of bigrams (two-word sequences)
+- **ROUGE-L**: Longest common subsequence
+
+**Q3: When to use which metric?**
+**A3:**
+- **Translation**: BLEU, METEOR
+- **Summarization**: ROUGE, BERTScore
+- **Question Answering**: F1 score, Exact Match
+- **Text Generation**: Perplexity, Human evaluation
+
+---
+
+# **PRAC 9: RAG System**
+
+## **Theory & Full Forms:**
+- **RAG**: Retrieval-Augmented Generation
+- **FAISS**: Facebook AI Similarity Search
+- **Vector Database**: Stores embeddings for semantic search
+- **Semantic Search**: Finding meaning-based matches
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: What problem does RAG solve?**
+**A1:** RAG addresses:
+- **Hallucination**: Making up facts
+- **Outdated knowledge**: Models trained on old data
+- **Domain specificity**: Lack of specialized knowledge
+
+**Q2: How does retrieval improve generation?**
+**A2:** By:
+- Providing factual context from external knowledge
+- Grounding responses in verified information
+- Reducing model's reliance on memorized patterns
+
+**Q3: Components of RAG system?**
+**A3:**
+1. **Retriever**: Finds relevant documents (vector search)
+2. **Generator**: Produces final answer (LLM)
+3. **Vector Store**: Database of document embeddings
+
+---
+
+# **PRAC 10: Model Optimization**
+
+## **Theory & Full Forms:**
+- **Quantization**: Reducing numerical precision (32-bit → 8-bit)
+- **Pruning**: Removing unimportant weights
+- **Dynamic Quantization**: Applied during inference
+- **Model Compression**: Reducing model size and latency
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: What is quantization?**
+**A1:** Process of reducing precision:
+- **FP32** (32-bit floating point) → **INT8** (8-bit integer)
+- **4x reduction** in model size
+- **2-4x speedup** in inference
+
+**Q2: Types of quantization?**
+**A2:**
+- **Dynamic**: Weights quantized, activations computed dynamically
+- **Static**: Both weights and activations pre-quantized
+- **Quantization-aware training**: Train with quantization simulated
+
+**Q3: What is pruning?**
+**A3:** Removing unimportant weights:
+- **Magnitude pruning**: Remove weights near zero
+- **Structured pruning**: Remove entire neurons/channels
+- **Iterative pruning**: Gradually prune during training
+
+---
+
+# **PRAC 11: Bias Detection**
+
+## **Theory & Full Forms:**
+- **Bias**: Systematic errors or unfairness in model outputs
+- **Stereotyping**: Reinforcing social stereotypes
+- **Debiasing**: Techniques to reduce bias
+- **Fairness**: Equal treatment across demographic groups
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: Sources of bias in AI models?**
+**A1:**
+- **Training data bias**: Unrepresentative datasets
+- **Labeling bias**: Human annotator prejudices
+- **Algorithmic bias**: Model architecture choices
+- **Deployment bias**: Real-world usage patterns
+
+**Q2: How to detect bias?**
+**A2:**
+- **Prompt testing**: Systematically test different demographic prompts
+- **Statistical parity**: Compare outcomes across groups
+- **Human evaluation**: Diverse reviewer panels
+
+**Q3: Mitigation techniques?**
+**A3:**
+- **Data collection**: Diverse, representative datasets
+- **Debiasing algorithms**: Adversarial training, regularization
+- **Post-processing**: Output filtering and correction
+- **Prompt engineering**: Careful instruction design
+
+---
+
+# **PRAC 12: AI Agents**
+
+## **Theory & Full Forms:**
+- **AI Agent**: Autonomous system that perceives and acts
+- **Multi-agent systems**: Multiple agents interacting
+- **Autonomous**: Self-directed operation
+- **Text-based agents**: NLP-powered conversational agents
+
+## **Key Concepts & Viva Q&A:**
+
+**Q1: What defines an AI agent?**
+**A1:** Key characteristics:
+- **Autonomy**: Operates without human intervention
+- **Reactivity**: Responds to environment changes
+- **Pro-activeness**: Takes initiative
+- **Social ability**: Communicates with other agents
+
+**Q2: Components of AI agent architecture?**
+**A2:**
+1. **Perception**: Input processing (text understanding)
+2. **Reasoning**: Decision making (LLM inference)
+3. **Action**: Output generation (text response)
+4. **Memory**: Context retention
+
+**Q3: Applications of multi-agent systems?**
+**A3:**
+- **Conversational AI**: Chatbots, virtual assistants
+- **Simulation**: Economic, social simulations
+- **Game AI**: NPC interactions
+- **Distributed problem solving**: Collaborative tasks
+
+These explanations cover all essential concepts, technical details, and potential viva questions for each practical, providing comprehensive preparation for AI/ML examinations.
